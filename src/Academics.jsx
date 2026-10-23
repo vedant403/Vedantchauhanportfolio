@@ -1,6 +1,9 @@
 import React from "react";
 import { academics } from "./data/portfolio.js";
 
+const sitePath = (path) =>
+  `${import.meta.env.BASE_URL}${path.replace(/^\/+/, "")}`;
+
 function ArrowIcon({ diagonal = false }) {
   return (
     <svg
@@ -155,10 +158,10 @@ export default function AcademicsPage() {
         </div>
 
         <div className="academics-actions">
-          <a className="button button-primary" href="/#home">
+          <a className="button button-primary" href={sitePath("/#home")}>
             Back to portfolio <ArrowIcon />
           </a>
-          <a className="button button-secondary" href="/projects">
+          <a className="button button-secondary" href={sitePath("/projects")}>
             Explore projects <ArrowIcon diagonal />
           </a>
         </div>

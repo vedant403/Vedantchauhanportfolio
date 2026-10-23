@@ -8,19 +8,22 @@ import {
   strengths,
 } from "./data/portfolio.js";
 
+const sitePath = (path) =>
+  `${import.meta.env.BASE_URL}${path.replace(/^\/+/, "")}`;
+
 const navigation = [
-  ["Home", "/#home"],
-  ["Projects", "/projects"],
-  ["Academics", "/academics"],
-  ["Experience", "/#experience"],
-  ["Skills", "/#skills"],
-  ["About", "/#about"],
-  ["Contact", "/#contact"],
+  ["Home", sitePath("/#home")],
+  ["Projects", sitePath("/projects")],
+  ["Academics", sitePath("/academics")],
+  ["Experience", sitePath("/#experience")],
+  ["Skills", sitePath("/#skills")],
+  ["About", sitePath("/#about")],
+  ["Contact", sitePath("/#contact")],
 ];
 
 const portfolioCommands = [
   ...navigation,
-  ["Strengths", "/#strengths"],
+  ["Strengths", sitePath("/#strengths")],
   ["Resume on request", resumeRequestUrl],
 ];
 
@@ -45,11 +48,11 @@ function Brand({ footer = false }) {
   return (
     <a
       className={`brand${footer ? " brand-footer" : ""}`}
-      href="/#home"
+      href={sitePath("/#home")}
       aria-label="Vedant Chauhan, back to home"
     >
       <span className="brand-mark" aria-hidden="true">
-        <img src="/brand-emblem.png" alt="" />
+        <img src={`${import.meta.env.BASE_URL}brand-emblem.png`} alt="" />
       </span>
       <span className="brand-name">VEDANT<span>.DEV</span></span>
     </a>
@@ -366,7 +369,7 @@ function Hero() {
           technologies.
         </p>
         <div className="hero-actions">
-          <a className="button button-primary" href="/projects">
+          <a className="button button-primary" href={sitePath("/projects")}>
             Explore my projects <ArrowIcon />
           </a>
           <a
@@ -445,7 +448,7 @@ function About() {
           <a className="text-link" href="#contact">
             Get to know me <ArrowIcon />
           </a>
-          <a className="text-link academics-link" href="/academics">
+          <a className="text-link academics-link" href={sitePath("/academics")}>
             View academics <ArrowIcon diagonal />
           </a>
         </div>
@@ -526,7 +529,7 @@ function Projects() {
                 <span key={category}>{category}</span>
               ))}
             </div>
-            <a className="text-link case-study-link" href="/projects/safesphere-ar">
+            <a className="text-link case-study-link" href={sitePath("/projects/safesphere-ar")}>
               Explore the concept <ArrowIcon diagonal />
             </a>
             <a
@@ -611,7 +614,7 @@ function ProjectsPage() {
           ))}
         </div>
         <div className="route-project-actions">
-          <a className="button button-primary" href="/projects/safesphere-ar">
+          <a className="button button-primary" href={sitePath("/projects/safesphere-ar")}>
             View concept details <ArrowIcon diagonal />
           </a>
           <a
@@ -638,7 +641,7 @@ function CaseStudySection({ title, children }) {
 function SafeSphereCaseStudy() {
   return (
     <article className="section-shell section-block route-page case-study">
-      <a className="text-link back-link" href="/projects">
+      <a className="text-link back-link" href={sitePath("/projects")}>
         <ArrowIcon /> Back to projects
       </a>
       <span className="eyebrow">Concept project · Case study</span>
@@ -689,7 +692,7 @@ function SafeSphereCaseStudy() {
         >
           Visit SafeSphere AR <ArrowIcon diagonal />
         </a>
-        <a className="button button-secondary" href="/projects">
+        <a className="button button-secondary" href={sitePath("/projects")}>
           All projects
         </a>
       </div>
@@ -745,7 +748,7 @@ function Footer() {
         <nav className="footer-nav" aria-label="Footer navigation">
           {[
             ...navigation,
-            ["Strengths", "/#strengths"],
+            ["Strengths", sitePath("/#strengths")],
             ["Resume on request", resumeRequestUrl],
           ].map(([label, href]) => (
             <a
@@ -765,7 +768,13 @@ function Footer() {
 }
 
 export default function App() {
-  const route = window.location.pathname.replace(/\/+$/, "") || "/";
+  const basePath = import.meta.env.BASE_URL.replace(/\/+$/, "");
+  const pathname = window.location.pathname.replace(/\/+$/, "") || "/";
+  const route = pathname.startsWith(`${basePath}/`)
+    ? pathname.slice(basePath.length)
+    : pathname === basePath
+      ? "/"
+      : pathname;
   const page =
     route === "/"
       ? "home"
@@ -827,7 +836,7 @@ export default function App() {
             <span className="eyebrow">Page not found</span>
             <h1>That page isn’t here.</h1>
             <p>Try heading back to the portfolio.</p>
-            <a className="button button-primary" href="/#home">
+            <a className="button button-primary" href={sitePath("/#home")}>
               Back to home <ArrowIcon />
             </a>
           </section>
