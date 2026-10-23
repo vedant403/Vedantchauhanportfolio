@@ -28,4 +28,4 @@ page links.
 
 The published URL will be:
 
-`https://vedant403.github.io/Vedantchauhanportfolio/`
+`https://vedant403.github.io/vedantchuahanportfolio/`
